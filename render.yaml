@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: multi-tenant-org-service
+    env: docker
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: MASTER_DB_NAME
+        value: master
+      - key: TENANT_DB_NAME
+        value: tenant_data

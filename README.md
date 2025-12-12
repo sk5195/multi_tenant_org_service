@@ -81,6 +81,41 @@ Open:
 - Home: http://127.0.0.1:8000/
 - Swagger docs: http://127.0.0.1:8000/docs
 
+## Public Deployment (Render + MongoDB Atlas)
+
+To make this service accessible to everyone, deploy the API to a public hosting provider and use a managed MongoDB (Atlas).
+
+### 1) Create a MongoDB Atlas cluster
+
+- Create a free cluster in MongoDB Atlas
+- Create a database user
+- Add an IP allowlist entry
+  - For quick testing you can allow `0.0.0.0/0` (not recommended for production)
+- Copy your connection string (SRV) and use it as `MONGODB_URI`
+
+Example:
+
+`mongodb+srv://<user>:<password>@<cluster-host>/?retryWrites=true&w=majority`
+
+### 2) Deploy on Render
+
+This repo includes a `Dockerfile` and `render.yaml`.
+
+- Go to Render Dashboard
+- New -> Blueprint
+- Select this GitHub repository
+- Set environment variables:
+  - `MONGODB_URI` = your MongoDB Atlas connection string
+  - `JWT_SECRET_KEY` = a strong random secret
+
+After deploy, Render will provide a public URL like:
+
+- `https://<your-service>.onrender.com`
+
+Docs will be at:
+
+- `https://<your-service>.onrender.com/docs`
+
 ## API Summary
 
 ### Create Organization
